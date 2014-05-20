@@ -1,0 +1,9 @@
+## build a heap  
+## sort a heap
+
+## efficient
+
+## use case
+1. Q: 1百万个数中，找出最大的1000个数   
+A: 构造一个1000大小的小顶堆，依次添加，每次替换掉顶部最小的数据
+
