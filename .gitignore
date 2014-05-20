@@ -1,0 +1,13 @@
+.classpath
+.tags
+*.bak
+*.class
+*.iml
+*.pb
+*.pyc
+*.swp
+*~
+*/a.out
+*/bin
+*/gen-java/
+*/target
