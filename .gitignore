@@ -7,7 +7,7 @@
 *.pyc
 *.swp
 *~
-*/a.out
+*/*/a.out
 */bin
 */gen-java/
 */target
