@@ -1,0 +1,117 @@
+###signals
+Signals are a technique used to notify a process that some condition has occurred. For example, if a process divides by zero, the signal whose name is SIGFPE (floating-point exception) is sent to the process. The process has three choices for dealing with the signal.
+1. Ignore the signal. This option isn't recommended for signals that denote a hardware exception, such as dividing by zero or referencing memory outside the address space of the process, as the results are undefined.
+2. Let the default action occur. For a divide-by-zero condition, the default is to terminate the process.
+3. Provide a function that is called when the signal occurs (this is called "catching" the signal). By
+providing a function of our own, we'll know when the signal occurs and we can handle it as we wish.
+
+Many conditions generate signals. Two terminal keys, called the interrupt key— often the DELETE key or Control-C—and the quit key—often Control-backslash—are used to interrupt the currently running process. Another way to generate a signal is by calling the kill function.
+
+To catch this signal, the program needs to call the signal function, specifying the name of the function to call when the SIGINT signal is generated. 
+
+#### case 
+```c
+if (signal(SIGINT, sig_int) == SIG_ERR) err_sys("signal error");
+
+void  sig_int(int signo)
+{
+ printf("interrupt\n%% "); 
+}
+```
+
+
+### cpu time
+The user CPU time is the CPU time attributed to user instructions. The system CPU time is the CPU time attributed to the kernel when it executes on behalf of the process. For example, whenever a process executes a system service, such as read or write, the time spent within the kernel performing that system service is charged to the process. The sum of user CPU time and system CPU time is often called the CPU time.
+
+### system call
+The system call interface has always been documented in Section 2 of the UNIX Programmer's Manual. Its definition is in the C language, regardless of the actual implementation technique used on any given system to invoke a system call. 
+The technique used on UNIX systems is for each **system call** to have a function of the same name in the standard **C library**. The user process calls this function, using the standard C calling sequence. This function then invokes the appropriate kernel service, using whatever technique is required on the system. 
+For example, the function may put one or more of the C arguments into general registers and then execute some machine instruction that generates a software interrupt in the kernel. For our purposes, we can consider the system calls as being C functions.
+Section 3 of the UNIX Programmer's Manual defines the general-purpose functions available to programmers. These functions aren't entry points into the kernel, although they may invoke one or more of the kernel's system calls. For example, the printf function may use the write system call to output a string, but the strcpy (copy a string) and atoi (convert ASCII to integer) functions don't involve the kernel at all.
+From an implementor's point of view, the distinction between a system call and a library function is fundamental. But from a user's perspective, the difference is not as critical. 
+
+### io
+ Most file I/O on a UNIX system can be performed using only five functions: open, read, write, lseek, and close. The functions described in this chapter are often referred to as unbuffered I/O, in contrast to the standard I/O routines, which we describe in Chapter 5. The term unbuffered means that each read or write invokes a system call in the kernel. These unbuffered I/O functions are not part of ISO C, but are part of POSIX.1 and the Single UNIX Specification.
+
+#### File Descriptors
+ To the kernel, all open files are referred to by file descriptors. A file descriptor is a non-negative integer. When we open an existing file or create a new file, the kernel returns a file descriptor to the process. When we want to read or write a file, we identify the file with the file descriptor that was returned by open or creat as an argument to either read or write.
+ By convention, UNIX System shells associate file descriptor 0 with the standard input of a process, file descriptor 1 with the standard output, and file descriptor 2 with the standard error. 
+ The magic numbers 0, 1, and 2 should be replaced in POSIX-compliant applications with the symbolic constants STDIN_FILENO, STDOUT_FILENO, and STDERR_FILENO. These constants are defined in the <unistd.h> header.
+ File descriptors range from 0 through OPEN\_MAX. With FreeBSD 5.2.1, Mac OS X 10.3, and Solaris 9, the limit is essentially infinite, bounded by the amount of memory on the system, the size of an integer, and any hard and soft limits configured by the system administrator. Linux 2.4.22 places a hard limit of 1,048,576 on the number of file descriptors per process.
+#### open
+A file is opened or created by calling the open function.
+```c
+#include <fcntl.h>
+int open(const char *pathname, int oflag, ... /* mode_t mode */ );
+    Returns: file descriptor if OK, –1 on error
+```
+
+####create
+A new file can also be created by calling the creat function.
+```c
+#include <fcntl.h>
+int creat(const char *pathname, mode_t mode);
+Returns: file descriptor opened for write-only if OK, –1 on error
+```
+Note that this function is equivalent to 
+`open (pathname, O_WRONLY | O_CREAT | O_TRUNC, mode);`
+
+####close
+An open file is closed by calling the close function.
+```c
+#include <unistd.h>
+int close(int filedes);
+Returns: 0 if OK, –1 on error
+```
+Closing a file also releases any record locks that the process may have on the file.  When a process terminates, all of its open files are closed automatically by the kernel. Many programs take advantage of this fact and don't explicitly close open files.
+
+####lseek
+Every open file has an associated "current file offset," normally a non-negative integer that measures the number of bytes from the beginning of the file
+
+An open file's offset can be set explicitly by calling lseek.
+```c
+#include <unistd.h>
+off_t lseek(int filedes, off_t offset, int whence);
+Returns: new file offset if OK, –1 on error
+```
+
+#### read
+Data is read from an open file with the read function.
+```c
+#include <unistd.h>
+ssize_t read(int filedes, void *buf, size_t nbytes);
+Returns: number of bytes read, 0 if end of file, –1 on error
+```
+
+#### write
+Data is written to an open file with the write function.
+```c
+#include <unistd.h>
+ssize_t write(int filedes, const void *buf, size_t nbytes);
+Returns: number of bytes written if OK, –1 on error
+```
+###file sharing
+The kernel uses three data structures to represent an open file, and the relationships among them determine the effect one process has on another with regard to file sharing.
+1. Every process has an entry in the process table. Within each process table entry is a table of open file descriptors, which we can think of as a vector, with one entry per descriptor. Associated with each file descriptor are
+a. The file descriptor flags (close-on-exec; refer to Figure 3.6 and Section 3.14)
+b. A pointer to a file table entry
+2. The kernel maintains a file table for all open files. Each file table entry contains
+a. The file status flags for the file, such as read, write, append, sync, and nonblocking; more on these in Section 3.14
+b. The current file offset
+c. A pointer to the v-node table entry for the file
+3. Each open file (or device) has a v-node structure that contains information about the type of file and
+pointers to functions that operate on the file. For most files, the v-node also contains the i-node for the file. This information is read from disk when the file is opened, so that all the pertinent information about the file is readily available. For example, the i-node contains the owner of the file, the size of the file, pointers to where the actual data blocks for the file are located on disk, and so on. (We talk more about i-nodes in Section 4.14 when we describe the typical UNIX
+file system in more detail.)
+Linux has no v-node. Instead, a generic i-node structure is used. Although the implementations differ, the v-node is conceptually the same as a generic i-node. Both point to an i-node structure specific to the file system.
+
+If two independent processes have the same file open, we could have the arrangement shown in Figure 3.7. We assume here that the first process has the file open on descriptor 3 and that the second process has that same file open on descriptor 4. Each process that opens the file gets its own file table entry, but only a single v-node table entry is required for a given file. One reason each process gets its own file table entry is so that each process has its own current offset for the
+file
+
+Given these data structures, we now need to be more specific about what happens with certain operations that we've already described.
+- After each write is complete, the current file offset in the file table entry is incremented by the number of bytes written. If this causes the current file offset to exceed the current file size, the current file size in the i-node table entry is set to the current file offset (for example, the file is extended).
+- If a file is opened with the O_APPEND flag, a corresponding flag is set in the file status flags of the file table entry. Each time a write is performed for a file with this append flag set, the current file offset in the file table entry is first set to the current file size from the i-node table entry. This forces every write to be appended to the current end of file.
+- If a file is positioned to its current end of file using lseek, all that happens is the current file offset in the file table entry is set to the current file size from the i-node table entry. (Note that this is not the same as if the file was opened with the O_APPEND flag, as we will see in Section 3.11.)
+- The lseek function modifies only the current file offset in the file table entry. No I/O takes place.
+
+### core dump
+This is where the phrase "core dump" comes from: the main memory image of a program stored in a file on disk for diagnosis.)

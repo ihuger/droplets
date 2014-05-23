@@ -1,0 +1,12 @@
+###进程
+
+###线程
+All the threads within a process share the same address space, file descriptors, stacks, and process-related attributes. Because they can access the same memory, the threads need to synchronize access to shared data among themselves to avoid inconsistencies.
+As with processes, threads are identified by IDs. Thread IDs, however, are local to a process. A thread ID from one process has no meaning in another process. We use thread IDs to refer to specific threads as we manipulate the threads within a process.
+
+
+###区别和联系
+
+
+
+
