@@ -1,0 +1,12 @@
+Method   | Short Description  |  Provided by (operating systems or other environments)
+--------:|:--:|:--:
+File   | A record stored on disk that can be accessed by name by any process   |Most operating systems
+Signal | A system message sent from one process to another, not usually used to store information but instead give commands.  |Most operating systems; some systems, such as Win NT subsystem, implement signals in only the C run-time library and provide no support for their use as an IPC method[citation needed]. But other subsystems like the POSIX subsystem provided by default until windows 2000. Then available with interix in XP/2003 then with « windows services for UNIX » (SFU).
+Socket | A data stream sent over a network interface, either to a different process on the same computer or to another computer |Most operating systems
+Message queue |  An anonymous data stream similar to the pipe, but stores and retrieves information in packets. |Most operating systems
+Pipe   | A two-way data stream interfaced through standard input and output and is read character by character.   | All POSIX systems, Windows
+Named pipe | A pipe implemented through a file on the file system instead of standard input and output.| All POSIX systems, Windows
+Semaphore  | A simple structure that synchronizes threads or processes acting on shared resources.   |All POSIX systems, Windows
+Shared memory |  Multiple processes given access to the same memory, allowing all to change it and read changes made by other processes.|   All POSIX systems, Windows
+Message passing (shared nothing)|    Similar to the message queue.   |Used in MPI paradigm, Java RMI, CORBA, DDS, MSMQ, MailSlots, QNX, others
+Memory-mapped file | A file mapped to RAM and can be modified by changing memory addresses directly instead of outputting to a stream, shares same benefits as a standard file.    |All POSIX systems, Windows
