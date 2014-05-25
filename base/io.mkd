@@ -28,3 +28,26 @@
 
 
 
+6. epoll与select、poll区别( refer to http://blog.csdn.net/ctthuangcheng/article/details/9720137   http://blog.csdn.net/hu330459076/article/details/7748723   http://blog.csdn.net/ctthuangcheng/article/details/9332655)
+    - 相比于select与poll，epoll最大的好处在于它不会随着监听fd数目的增长而降低效率。内核中的select与poll的实现是采用轮询来处理的，轮询的fd数目越多，自然耗时越多。
+    - epoll的实现是基于回调的，如果fd有期望的事件发生就通过回调函数将其加入epoll就绪队列中,也就是说它只关心“活跃”的fd，与fd数目无关。
+    - 内核 / 用户空间 内存拷贝问题，如何让内核把 fd消息通知给用户空间呢？在这个问题上select/poll采取了内存拷贝方法。而epoll采用了共享内存的方式。
+    - epoll不仅会告诉应用程序有I/0 事件到来，还会告诉应用程序相关的信息，这些信息是应用程序填充的，因此根据这些信息应用程序就能直接定位到事件，而不必遍历整个fd集合。
+
+7. select 与 poll区别
+    - 文件描述符集合的区别：
+ 在poll中描述符集合是一个struct pollfd结构类型的数组，用于存放需要检测其状态的Socket描述符；每当调用这个函数之后，系统不会清空这个数组，操作起来比较方便；特别是对于socket连接比较多的情况下，在一定程度上可以提高处理的效率；这一点与select()函数不同，调用select()函数之后，select()函数会清空它所检测的socket描述符集合，导致每次调用select()之前都必须把socket描述符重新加入到待检测的集合中；因此，select()函数适合于只检测一个socket描述符的情况，而poll()函数适合于大量socket描述符的情况。
+ 
+    - 文件描述符特性的区别：
+poll() 函数不会受到socket描述符上的O_NDELAY标记和O_NONBLOCK标记的影响和制约，也就是说，不管socket是阻塞的还是非阻塞的，poll()函数都不会收到影响；而select()函数则不同，select()函数会受到O_NDELAY标记和O_NONBLOCK标记的影响，如果socket是阻塞的socket，则调用select()跟不调用select()时的效果是一样的，socket仍然是阻塞式TCP通讯，相反，如果socket是非阻塞的socket，那么调用select()时就可以实现非阻塞式TCP通讯；
+
+    - 两者移植性的区别：
+poll() 函数的功能和返回值的含义与 select() 函数的功能和返回值的含义是完全一样的，两者之间的差别就是内部实现方式不一样，select()函数基本上可以在所有支持文件描述符操作的系统平台上运行(如：Linux 、Unix 、Windows、MacOS等)，可移植性好，而poll()函数则只有个别的的操作系统提供支持(如：SunOS、Solaris、AIX、HP提供支持，但是Linux不提供支持)，可移植性差；
+
+8. select 与socket阻塞、非阻塞
+一个套接字阻塞或者不阻塞，select就在那里，它可以针对这2种套接字使用，对任何一种套接字的轮询检测，超时时间都是有效的，区别就在于：
+当select完毕，认为该套接字可读时，
+    - 阻塞的套接字，会让read阻塞，直到读到所需要的所有字节；
+    - 非阻塞的套接字，会让read读完fd中的数据后就返回，但如果原本你要求读10个数据，这时只读了8个数据，如果你不再次使用select来判断它是否可读，而是直接read，很可能返回EAGAIN或=EWOULDBLOCK(BSD风格) ，
+    此错误由在非阻塞套接字上不能立即完成的操作返回，例如，当套接字上没有排队数据可读时调用了recv()函数。此错误不是严重错误，相应操作应该稍后重试。对于在非阻塞   SOCK_STREAM套接字上调用connect()函数来说，报告EWOULDBLOCK是正常的，因为建立一个连接必须花费一些时间。 EWOULDBLOCK的意思是如果你不把socket设成非阻塞(即阻塞)模式时，这个读操作将阻塞，也就是说数据还未准备好(但系统知道数据来了，所以select告诉你那个socket可读)。使用非阻塞模式做I/O操作的细心的人会检查errno是不是EAGAIN、EWOULDBLOCK、EINTR，如果是就应该重读，一般是用循环。如果你不是一定要用非阻塞就不要设成这样，这就是为什么系统的默认模式是阻塞。
+
