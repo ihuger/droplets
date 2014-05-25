@@ -40,10 +40,8 @@
 7. select 与 poll区别
     - 文件描述符集合的区别：
  在poll中描述符集合是一个struct pollfd结构类型的数组，用于存放需要检测其状态的Socket描述符；每当调用这个函数之后，系统不会清空这个数组，操作起来比较方便；特别是对于socket连接比较多的情况下，在一定程度上可以提高处理的效率；这一点与select()函数不同，调用select()函数之后，select()函数会清空它所检测的socket描述符集合，导致每次调用select()之前都必须把socket描述符重新加入到待检测的集合中；因此，select()函数适合于只检测一个socket描述符的情况，而poll()函数适合于大量socket描述符的情况。
- 
     - 文件描述符特性的区别：
 poll() 函数不会受到socket描述符上的O_NDELAY标记和O_NONBLOCK标记的影响和制约，也就是说，不管socket是阻塞的还是非阻塞的，poll()函数都不会收到影响；而select()函数则不同，select()函数会受到O_NDELAY标记和O_NONBLOCK标记的影响，如果socket是阻塞的socket，则调用select()跟不调用select()时的效果是一样的，socket仍然是阻塞式TCP通讯，相反，如果socket是非阻塞的socket，那么调用select()时就可以实现非阻塞式TCP通讯；
-
     - 两者移植性的区别：
 poll() 函数的功能和返回值的含义与 select() 函数的功能和返回值的含义是完全一样的，两者之间的差别就是内部实现方式不一样，select()函数基本上可以在所有支持文件描述符操作的系统平台上运行(如：Linux 、Unix 、Windows、MacOS等)，可移植性好，而poll()函数则只有个别的的操作系统提供支持(如：SunOS、Solaris、AIX、HP提供支持，但是Linux不提供支持)，可移植性差；
 
