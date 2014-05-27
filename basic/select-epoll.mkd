@@ -1,0 +1,16 @@
+#### select原理
+1. 每一个可以被select的文件描述符（socket），有一个等待改事件发生的列表，当io事件发生时，就会通知所有等待的程序
+2. select有一个fd 向量，这里维护了所有感兴趣的fd集合
+3. select在每次调用时，会轮询fd向量中的所有fd，调用fd对应的poll方法，询问是否有事件发生，如果有满足，则select返回成功，如果遍历结束并且超时，select会sleep
+4. 如果fd集中任意事件发生，则会通知select有事件发生，select会被唤醒，然后进入第3步
+
+#### epoll原理
+1. epoll 构建一个epoll fd，该fd有一个等待队列和ready队列
+2. 向epoll添加fd时，epoll会检测fd的状态，如果waiting则加入到epoll fd的等待队列，否则加入到ready队列
+3. 当epoll的等待事件中有完成时，则事件会通知epoll fd，并加入到ready队列，epoll fd会唤醒epoll
+
+
+#### 区别和联系
+1. select无状态，epoll有状态
+2. 
+
