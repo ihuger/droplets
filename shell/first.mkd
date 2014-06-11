@@ -1,0 +1,72 @@
+### shabang
+sharp bang (stand for #!)
+\#!/usr/bin/env shell
+
+### echo /printf
+#### echo basic
+```shell
+echo "abc abc"  # try : echo "abc ! abc"
+echo abc abc    # try : echo abc; abc  
+echo 'abc ! abc' # try : echo 'abc $var abc"   #$var will not be subtitude
+```
+#### echo options
+```shell
+echo -e "1\t2\t\3"  # -e : using transform chars
+echo "\e[31m1\t2\t3\e[0m1"  # format: "\e[31m" "\e[31,41m"  color print  0: default   31:red 32:green ..  background => 41:red  42:green ...
+```
+
+#### printf
+almost like c 
+```shell
+printf "%-5s %-10s %-4s\n" No. Name Mark
+printf "%-5s %-10s %-4.2f\n" 1   Jonse 10.01
+printf "%-5s %-10s %-4.2f\n" 2   Jeff  89.03 
+```
+
+### environment 
+cat /proc/$PID/environ  | tr '\0' '\n'
+pgrep vpn
+
+```shell
+#varible length
+var=1232322
+length=${#var}
+echo $length
+
+#which shell
+echo $SHELL
+echo $0
+
+#which user (root is 0)
+echo $UID
+```
+
+### math 
+#### let
+```shell
+no1=4
+no2=5
+let result=no1+no2  #no space beside operator like '+','='
+echo $result
+
+let  no1++
+let --no2
+
+let no1+=6
+```
+#### [ ]
+```shell
+no1=4
+no2=5
+result=$[ no1 + no2 ]
+result=$[ $no1 + no2 ]
+result=$(( no1 + 50 ))
+echo `expr 3 + 4 `
+```
+#### float 
+echo " 4 * 0.06 " |bc
+echo "scale=2;3/8 " |bc
+echo "obase=2;18 " |bc
+echo "sqrt(18)" |bc
+echo "18^18" |bc
+
