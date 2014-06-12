@@ -25,6 +25,17 @@ cat file1
 ```
 
 - command <&- 关闭标准输入
+- command >&- 关闭标准输出；
+- n<&- 表示将 n 号输入关闭；
+- n>&- 表示将 n 号输出关闭；
+
+- here doc
+```shell
+cat <<EOF > log.txt
+LOG FILE TEST
+KJKFJ
+EOF
+```
 
 
 
