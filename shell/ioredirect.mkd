@@ -1,0 +1,32 @@
+###io重定向
+- stdin 0, stdout 1 , stderr 2
+
+- M> filename  文件描述符M （M默认为1） 重定向到文件 filename  (重写的形式）
+- M>> filename  文件描述符M （M默认为1） 重定向到文件 filename  ( 追加的形式）
+- &> filename   将stdout、stderr都重定向到 filename 
+- : > filename   将filename置空，如果filename不存在则创建空的新文件
+
+- 重定向符如果涉及文件描述符，则两者直接不应该有空格，如 echo 'dkfj' 2>&1 不能写成 echo 'dkfj' 2> &1  或者 echo 'dkfj' 2 >&1
+- M>&N  文件描述符M 重定向到文件描述符 N  (重写）(注意没有空格）
+- M>>&N  文件描述符M 重定向到文件描述符 N  (追加）
+
+- command  < filename   从文件输入
+- command 0< filename   从文件输入
+
+- [j]<> filename 读写方式打开filename，并重定向到描述符j，如果j未指定，则默认为0，如果filename不存在，则创建
+
+```shell
+echo '123223423' > file1
+exec 3<> file1
+read -n 4 <&3
+echo -n . >&3
+exec 3>&-
+cat file1
+```
+
+- command <&- 关闭标准输入
+
+
+
+
+
