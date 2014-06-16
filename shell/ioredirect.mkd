@@ -37,6 +37,8 @@ KJKFJ
 EOF
 ```
 
+- tee 输出到多个地方
+`echo "kdfj " | tee test.log`
 
 
 

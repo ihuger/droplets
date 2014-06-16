@@ -1,0 +1,11 @@
+###array 
+
+- 定义： `a=(1,2,3,4,5)`
+- 取值： `echo ${a[1]} a[1]=100`
+- 所有值 `echo ${a[*]}` or `echo ${a[@]}`  区别在于前者为单元，后者为整体？
+- 长度   `echo ${#a[*]}`
+
+
+### map
+- declare -A s\_map
+- s\_map=([index1]=val1 [index2]=val2) 
