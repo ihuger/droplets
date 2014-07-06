@@ -1,0 +1,15 @@
+####1.数据类型
+var
+let
+String
+Array
+Map
+
+
+####2.控制
+for 
+for-in
+while
+do-while
+
+####

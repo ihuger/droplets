@@ -1,0 +1,17 @@
+#### for
+```shell
+for i in {1..2}
+do
+    echo $i
+done
+```
+
+{x..y} 可以生成数字、字母序列
+
+c-style
+```shell
+for((i=1;i<=2;++i))
+do
+    echo $i
+done
+```

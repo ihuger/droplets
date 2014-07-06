@@ -1,0 +1,8 @@
+#### cat
+- 使用管道： echo "test cat" | cat 
+- 同时输出管道和文件： echo "test cat" | cat - filename 
+- 压缩空白行： cat -s filename  (参考 tr)
+- 打印制表符为^I:  cat -T filename
+- 打印行号:  cat -n filename
+- 跳过空白行行号:  cat -b filename
+
