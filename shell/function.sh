@@ -10,7 +10,7 @@ usage(){
 [ $# -eq 0 ]  && usage
 
 is_file_exists(){
-    echo "loacl variable"
+    echo "local variable"
     local f="$1"
     echo "return stat"
     globalV=100

@@ -1,0 +1,63 @@
+#### cat
+- 使用管道： echo "test cat" | cat 
+- 同时输出管道和文件： echo "test cat" | cat - filename 
+- 压缩空白行： cat -s filename  (参考 tr)
+- 打印制表符为^I:  cat -T filename
+- 打印行号:  cat -n filename
+- 跳过空白行行号:  cat -b filename
+
+
+
+#### find
+- find . -print    ## \n 作为文件名的分割符
+- find . -print0   ## \0 作为文件名的分割符
+    * eg: find . -print 0 |xargs --null du -sh  #or
+    * eg: find . -print 0 |xargs -0 du -sh
+- find . -name "\*.mkd" -print   ##regurlar express
+- find . -iname "\*.mkd" -print  ##ignore case
+- find .  \\( -name "\*.mkd" -o -name "\*.txt" \\) -print  ##multiple conditions
+- find . -path "\*/path/\*"  ## -path 使用通配符匹配路径
+- find . -regex "\*/path/\*"  ## -regex 使用正则表达式匹配路径
+    * eg: find . -regex ".\*\\(\\.py | \\.sh \\)$"
+- find . ! -regex "\*/path/\*"  ## ! 否定
+- find . -maxdepth 1      ## -maxdepth  注意此限制条件放前面有利于运行效率
+- find . -mindepth 1      ## -mindepth
+- find . -type f -print
+    * f 普通文件
+    * l symbol links
+    * d dir
+    * c char device 
+    * b block device
+    * s Socket
+    * p FIIO
+- find . -atime -7 print
+    * atime 访问时间  +7 超过7天  7正好七天  -7少于七天
+    * mtime 修改时间
+    * ctime 变化时间
+- find . -amin -7 print
+    * amin 访问时间  +7 超过7分钟  7正好  -7少于
+    * mmin 修改时间
+    * cmin 变化时间
+- find . -newer file2 print
+- find . -size +2k print  ##b/c/w/k/M/G    +//-
+- find . -exec du -sh {} \;   ## 注意最后的\;  
+    * -exec    ## {}会被替换为匹配的路径
+    * -delete
+- find . -name "\*.swp" -prune ##剪枝
+    * find . -name \\( -name "\*.swp" \) -o \\(type -f\\)
+
+#### xargs
+
+
+
+    
+
+
+
+
+
+
+
+
+    
+
