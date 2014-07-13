@@ -45,7 +45,7 @@
     * -exec    	## {}会被替换为匹配的路径
     * -delete
 - find . -name "\*.swp" -prune 	##剪枝
-    * find . -name \\( -name "\*.swp" \) -o \\(type -f\\)
+    * find . \\( -name "\*.swp" -prune \) -o \\(type -f\\)
 
 ----
 
@@ -55,6 +55,59 @@
     * echo '1 2 \n 3 4 5\n 6 7\n 8\t 9\n' |xargs -n 3 echo
 - xargs -a file         #read from file
     * 
+- xargs -d X  
+    * echo "splitXsplitXsplit" |xargs -d X
+        split split split
+
+
+### tr (tr [options] set1 set2 )
+- tr set1 set2  #replace set1 with set2
+    * echo "abcdef 1234" | tr 'a-z' 'A-Z'
+    * echo "translation" | tr "a-zA-Z" "n-za-mN-ZA-M" |tr "a-zA-Z" "n-za-mN-ZA-M"
+    * set : startchar - endchar
+- tr -d set1  #delete all chars in set1
+    * echo "123456HELLO WORLD" |tr -d '0-9'
+- tr -c set1 #
+    * echo "12345 abcd" |tr -dc "12\n"
+- tr -s set1 #Squeeze multiple occurrences of the characters listed in the last operand (either string1 or string2) in the input into a single instance of the character.  This occurs after all deletion and translation is completed.
+    * echo "123334" |tr -s "3"
+
+### sort
+- sort -c  file #check whether input is sorted; do not sort
+- sort -n file  # --numeric-sort
+- sort -r file  # --reverse
+- sort -k, --key=POS1[,POS2]   #start a key at POS1, end it at POS2 (origin 1)
+    * echo "1\tbc\n2\tac" | sort -k 2 
+    * echo "1\tbc\n2\tac" | sort -k 1,2
+- sort -b file  # ignore leading blanks
+- sort -z file  # end lines with 0 byte, not newline
+    * echo "1\n2\n3\n4"  |sort -z |xargs -0 echo
+
+### uniq
+- uniq -c file #count
+- uniq -u file #uniq lines
+- uniq -d file #not uniq lines
+
+### mktemp #temporary
+- mktemp -d  dirname    #Make a directory instead of a file.
+- mktemp -t  {prefix}.XXXX
+- mktemp -q      #Fail silently if an error occurs.
+
+```sh
+    tempfoo=`basename $0`
+    TMPFILE=`mktemp -q /tmp/${tempfoo}.XXXXXX`
+    if [ $? -ne 0 ]; then
+        echo "$0: Can't create temp file, exiting..."
+        exit 1
+    fi
+```
+
+
+### md5sum /md5deep /crypt/gpg/base64/sha1sum
+
+
+
+
 
 
 
