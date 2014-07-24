@@ -106,19 +106,28 @@
 ### md5sum /md5deep /crypt/gpg/base64/sha1sum
 
 
+### filename/extension
+- ${var%.\*}  删除右侧通配，从右到左
+- ${var%%.\*}  删除右侧通配(贪婪，最长匹配），从右到左
+- ${var#\*.}  删除左侧通配
+- ${var##.\*}  删除左侧通配(贪婪，最长匹配）
 
+```shell
+filename="file.jile.jpg"
+file=${filename%.*}  #file.jile
+file=${filename%%.*} #(greedy)  file
+jpg=${filename#*.}   #jpg
+jpg=${filename##*.}   #(greedy) jile.jpg
+```
 
+### split  (see also cspilt)
+- split -b size  # 10k,1M,1G,c,w
+    + split -b 1k test
+- split -l lines # lines
+    + split -l 100 test
+- split -a 4 #suffix length
+    + split -l 100 -a 3
+- splite .. prefix
+    + split -l 1000 -a 3 test prefix
 
-
-
-    
-
-
-
-
-
-
-
-
-    
 
