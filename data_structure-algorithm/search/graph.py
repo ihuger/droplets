@@ -10,8 +10,22 @@ class Graph:
             for y in range(ylen):
                 self.all_nodes.add((x,y))
 
+        self.walls([2,3,4,5,6])
+
     def edges(self):
         pass
+
+    def cost(self,start_node,end_node):
+        if(start_node[0]>2 and start_node[0]<6
+                and start_node[1]>2 and start_node[1]<6):
+            return 40
+        else:
+            return 1
+#        return self.edges(start_node,end_node)
+
+    #greedy cost
+    def gcost(self,node0,node1):
+        return abs(node0[0]-node1[0]) + abs(node0[1]-node1[1])
 
     def neighbors(self,node):
         dirs = [(1, 0), (0, 1), (-1, 0), (0, -1)]
@@ -22,7 +36,9 @@ class Graph:
                 result.append(neighbor)
         return result
 
-    def walls(self,node):
-        pass
+    def walls(self,indexs):
+        for x in indexs:
+            self.all_nodes.remove((x,4))
+
 
 

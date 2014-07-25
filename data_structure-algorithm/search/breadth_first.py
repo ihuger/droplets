@@ -12,13 +12,19 @@ def run(graph,start,goal):
 
     while not frontier.empty():
        current = frontier.get()
+
+       #early exit
+       if current == goal:
+           break
+
        for next in graph.neighbors(current):
           if next not in came_from:
              frontier.put(next)
              came_from[next] = current
 
-    for x in came_from:
-        print x,came_from[x]
+    #for x in came_from:
+    #    print (x,came_from[x],),
+    print len(came_from)
 
     current = goal
     path = [current]
@@ -29,9 +35,9 @@ def run(graph,start,goal):
 
 
 if __name__ == "__main__":
-    graph = Graph(3,3)
-    start = (1,1)
-    goal = (0,0)
+    graph = Graph(10,10)
+    start = (3,3)
+    goal = (6,6)
     run(graph,start,goal)
 
 

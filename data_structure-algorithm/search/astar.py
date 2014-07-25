@@ -5,23 +5,29 @@ from Queue import PriorityQueue
 from sets import Set
 
 def run(graph,start,goal):
+
     frontier = PriorityQueue()
     frontier.put((0,start))
     came_from = {}
     came_from[start] = None
+    cost_so_far = {}
+    cost_so_far[start] = 0
 
     while not frontier.empty():
         current = frontier.get()[1]
+
         if current == goal:
             break
+
         for next in graph.neighbors(current):
-            new_cost = graph.gcost(next,goal)
-            if next not in came_from:
-                frontier.put((new_cost,next))
+            new_cost = cost_so_far[current] + graph.cost(current,next)
+            if next not in cost_so_far or new_cost < cost_so_far[next]:
+                frontier.put((new_cost + graph.gcost(next,goal),next))
+                cost_so_far[next] = new_cost;
                 came_from[next] = current
 
     #for x in came_from:
-    #    print x,came_from[x]
+    #    print (x,came_from[x],),
     print len(came_from)
 
     current = goal
