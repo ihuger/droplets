@@ -49,15 +49,19 @@
 
 ----
 
-
-### xargs
+ ### xargs
 - xargs -n number       ##max number of arguments
     * echo '1 2 \n 3 4 5\n 6 7\n 8\t 9\n' |xargs -n 3 echo
 - xargs -a file         #read from file
-    * 
-- xargs -d X  
-    * echo "splitXsplitXsplit" |xargs -d X
-        split split split
+- xargs -a file         ##read from file
+    * echo '1 2 3 4'> /tmp/t.x && xargs -a /tmp/t.x -n 2 echo
+- xargs -d delimeter
+    * echo 'a1b1c1d1' | xargs -d 1 -n 2 echo
+- xargs -0          ##terminated by a null character
+    * echo '1 2 \n 3 4 5\n 6 7\n 8\t 9\n' |xargs -0n 3 echo
+- xargs -p numbers          ##Run up to max-procs processes at a time; the default is 1. 0 for many
+    * echo '1 2 \n 3 4 5\n 6 7\n 8\t 9\n' |xargs -n 2 -p 3 wc -c
+
 
 
 ### tr (tr [options] set1 set2 )
