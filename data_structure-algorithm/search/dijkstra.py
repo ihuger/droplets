@@ -19,12 +19,12 @@ def run(graph,start,goal):
         if current == goal:
             break
 
-        for next in graph.neighbors(current):
-            new_cost = cost_so_far[current] + graph.cost(current,next)
-            if next not in cost_so_far or new_cost < cost_so_far[next]:
-                frontier.put((new_cost,next))
-                cost_so_far[next] = new_cost;
-                came_from[next] = current
+        for nextNode in graph.neighbors(current):
+            new_cost = cost_so_far[current] + graph.cost(current,nextNode)
+            if nextNode not in cost_so_far or new_cost < cost_so_far[nextNode]:
+                frontier.put((new_cost,nextNode))
+                cost_so_far[nextNode] = new_cost;
+                came_from[nextNode] = current
 
     #for x in came_from:
     #    print (x,came_from[x],),
