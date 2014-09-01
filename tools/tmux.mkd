@@ -1,40 +1,42 @@
-### attach : tmux may be reattached using:
-tmux attach
+### misc
 
-### Specify an alternative configuration file
-tmux -f file
+    tmux attach
+    tmux -f file  Specify an alternative configuration file
 
 ### session control
-  $           rename current session
-  L           Switch the attached client back to the last session.
-  s           Select a new session for the attached client interactively.
-  D           Choose a client to detach.
-  d           Detach the current client.
-  r           Force redraw of the attached client.
+
+    $           rename current session
+    L           Switch the attached client back to the last session.
+    s           Select a new session for the attached client interactively.
+    D           Choose a client to detach.
+    d           Detach the current client.
+    r           Force redraw of the attached client.
 
 ### window control
-  c           Create a new window.
-  &           Kill the current window.
-  ,           Rename the current window.
-  0 to 9      Select windows 0 to 9.
-  .           Prompt for an index to move the current window.
-  l           Move to the previously selected window.
-  n           Change to the next window.
-  p           Change to the previous window.
+
+    c           Create a new window.
+    &           Kill the current window.
+    ,           Rename the current window.
+    0 to 9      Select windows 0 to 9.
+    .           Prompt for an index to move the current window.
+    l           Move to the previously selected window.
+    n           Change to the next window.
+    p           Change to the previous window.
 
 ### pane control 
-  x           Kill the current pane.
-  !           Break the current pane out of the window.
-  "           Split the current pane into two, top and bottom
-  %           Split the current pane into two, left and right.
-  ;           Move to the previously active pane.
-  o           Select the next pane in the current window.
-  {           Swap the current pane with the previous pane.
-  }           Swap the current pane with the next pane.
-  Up, Down
-  Left, Right
+
+    x           Kill the current pane.
+    !           Break the current pane out of the window.
+    "           Split the current pane into two, top and bottom
+    %           Split the current pane into two, left and right.
+    ;           Move to the previously active pane.
+    o           Select the next pane in the current window.
+    {           Swap the current pane with the previous pane.
+    }           Swap the current pane with the next pane.
+    Up, Down
+    Left, Right
               Change to the pane above, below, to the left, or to the right of the current pane.
-  M-1 to M-5  Arrange panes in one of the five preset layouts: even-horizontal, even-vertical, main-horizontal, main-vertical, or tiled.
+    M-1 to M-5  Arrange panes in one of the five preset layouts: even-horizontal, even-vertical, main-horizontal, main-vertical, or tiled.
 
 ### buffers and others 
 
