@@ -1,0 +1,7 @@
+### dynamic subtitude
+    
+    var1="some variable"
+    var2="var1"
+    echo "{!var2}"  #same as : echo $var1
+    
+

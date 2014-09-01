@@ -1,12 +1,18 @@
 ### misc
 
-    tmux                :  start new
-    tmux new -s myname  :  start new with session name
-    tmux attach ( a/at) :  attach
-    tmux a -t myname    :  attach to named
-    tmux ls             :  list sessions
-    tmux -f file        :  Specify an alternative configuration file
-    tmux kill-session -t myname :  kill session
+    tmux                            :  start new
+    tmux new -s myname              :  start new with session name
+    tmux attach ( a/at)             :  attach
+    tmux a -t myname                :  attach to named
+    tmux ls                         :  list sessions
+    tmux -f file                    :  Specify an alternative configuration file
+    tmux source-file your_tmux.conf :  load your own tmux file 
+    tmux kill-session -t myname     :  kill session
+
+### command line
+
+    :                   start command line
+    :source-file file   source file
 
 ### session control
 
