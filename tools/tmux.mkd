@@ -1,13 +1,18 @@
 ### misc
 
-    tmux attach
-    tmux -f file  Specify an alternative configuration file
+    tmux                :  start new
+    tmux new -s myname  :  start new with session name
+    tmux attach ( a/at) :  attach
+    tmux a -t myname    :  attach to named
+    tmux ls             :  list sessions
+    tmux -f file        :  Specify an alternative configuration file
+    tmux kill-session -t myname :  kill session
 
 ### session control
 
     $           rename current session
-    L           Switch the attached client back to the last session.
-    s           Select a new session for the attached client interactively.
+    L           Switch to the last session
+    s           Select a session 
     D           Choose a client to detach.
     d           Detach the current client.
     r           Force redraw of the attached client.
@@ -35,7 +40,7 @@
     }           Swap the current pane with the next pane.
     Up, Down
     Left, Right
-              Change to the pane above, below, to the left, or to the right of the current pane.
+                Change to the pane above, below, to the left, or to the right of the current pane.
     M-1 to M-5  Arrange panes in one of the five preset layouts: even-horizontal, even-vertical, main-horizontal, main-vertical, or tiled.
 
 ### buffers and others 
