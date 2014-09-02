@@ -1,0 +1,1 @@
+curl http://localhost:34545/metrics?format| python -mjson.tool
