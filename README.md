@@ -10,8 +10,8 @@ A [keytab](https://kb.iu.edu/d/aumh) is a file containing pairs of Kerberos prin
 3. [kinit](http://www.lehman.cuny.edu/cgi-bin/man-cgi?kinit+1)
 4. NOTES:
     
-    klist     #查看当前的keytab
-    klist -l  #list keytab
-    klist -k -t -K dcdn.keytab  #查看keytab内容
-    kinit dcdn/user -k -t dcdn.keytab  #使用keytab
+        klist     #查看当前的keytab
+        klist -l  #list keytab
+        klist -k -t -K dcdn.keytab  #查看keytab内容
+        kinit dcdn/user -k -t dcdn.keytab  #使用keytab
 
