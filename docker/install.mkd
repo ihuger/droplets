@@ -1,0 +1,49 @@
+###install on macbook
+refer to [running-docker](http://docs.docker.com/installation/mac/#running-docker)
+boot2docker start/stop
+docker run
+
+### docker hellworld
+1. sudo docker run ubuntu:14.04 /bin/echo 'Hello world'
+    When you specify an image, Docker looks first for the image on your Docker host. If it can't find it then it downloads the image from the public image registry: Docker Hub.
+2. sudo docker run -t -i ubuntu:14.04 /bin/bash
+    An Interactive Container
+    Here we've again specified the docker run command and launched an ubuntu:14.04 image. But we've also passed in two flags: -t and -i. The -t flag assigns a pseudo-tty or terminal inside our new container and the -i flag allows us to make an interactive connection by grabbing the standard in (STDIN) of the container.
+3. sudo docker run -d ubuntu:14.04 /bin/sh -c "while true; do echo hello world; sleep 1; done"
+    A Daemonized Hello world
+    The -d flag tells Docker to run the container and put it in the background, to daemonize it.
+    This really long string is called a container ID. It uniquely identifies a container so we can work with it.
+    - docker ps
+    - docker logs some-name
+    - docker stop some-name
+    - docker version:   go (the programming language powering Docker)
+    - docker run -d -P training/webapp python app.py ( The -P flag is new and tells Docker to map any required network ports inside our container to our host. )
+        In our last example the -P flag is a shortcut for -p 5000 that maps port 5000 inside the container to a high port (from the range 49000 to 49900) on the local Docker host. We can also bind Docker containers to specific ports using the -p flag, 
+    - docker attach container
+    - boot2docker ip
+4. docker images
+    - docker images
+    - docker pull imagename:  If we want to pre-load an image we can download it using the docker pull command.
+
+5.  sudo docker run -d -P training/webapp python app.py
+    - sudo docker ps -l
+    - docker attach
+    - docker port nostalgic 5000
+    - docker logs -f nostalgic
+    - docker top nostalgic
+    - docker inspect 703702ec74c1
+    - docker inspect -f '{{ .NetworkSettings.IPAddress }}'
+    - docker start/stop/rm nostalgic
+
+### 名词
+1. docker hub： 数据仓库，类似maven 数据中心或github，可以创建自己的docker image，也可以从上面下载公开的image
+    When you specify an image, Docker looks first for the image on your Docker host. If it can't find it then it downloads the image from the public image registry: Docker Hub.
+2.
+
+
+###issues
+1. [sudo docker login ](http://superuser.com/questions/760909/running-docker-as-sudo)
+    sudo DOCKER_HOST=$DOCKER_HOST docker run
+2. docker on macbook 为什么需要用VM来运行，是怎样通过vm运行的？
+3. docker 下载的东西存到哪里了？
+4. docker 从哪里下载东西，容器内容如何更新？

@@ -1,0 +1,23 @@
+###CONNECTION
+mysql -hHOST -uUSERNANME -pPASSWORD DATABASE
+
+###CREATE
+create table if not exists tbl\_name 
+    col\_name column\_definition
+
+column\_definition:
+    data\_type [NOT NULL | NULL ] | [DEFAULT default\_value]
+        [AUTO\_INCREMENT] [UNIQUE KEY] | [PRIMARY KEY ]
+        [COMMENT 'string']
+        [COLUMN\_FORMAT {FIXED | DYNAMIC|DEFAULT}]
+        [STORAGE {DISK|MEMORY|DEFALUT}]
+        [reference_definition]
+
+    create table blue_info(  \
+         data_datetime      datetime             NOT NULL ,\
+         thunder_id         varchar(30)          NOT NULL ,\
+         dcdn_id            char(24)             NOT NULL ,\
+         upload_time_sec    int(10) unsigned     ,\
+         PRIMARY KEY(data_datetime,thunder_id,dcdn_id)
+    );
+

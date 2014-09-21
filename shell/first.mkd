@@ -2,6 +2,12 @@
 sharp bang (stand for #!)
 \#!/usr/bin/env shell
 
+#### mass commenting
+: <<"HEREDOC_START"
+echo something
+echo those command will be ignored
+HEREDOC_START
+
 ### echo /printf
 #### echo basic
 ```shell

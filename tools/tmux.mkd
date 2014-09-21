@@ -12,7 +12,7 @@
 ### command line
 
     :                   start command line
-    :source-file file   source file
+    :source-file file 
 
 ### session control
 
@@ -51,3 +51,21 @@
 
 ### buffers and others 
 
+### start with shell command
+ do something similar with a script. When I want to fire up tmux with my development configuration I call it. The script itself looks like the following:
+
+tmux has-session -t development
+if [ $? != 0 ] then
+    tmux new-session -s development -n editor -d
+    tmux send-keys -t development 'cd /var/www/htdocs/' C-m
+    tmux send-keys -t development 'vim' C-m
+    tmux split-window -v -t development
+    tmux split-window -v -t development
+    tmux select-layout -t development main-horizontal
+    tmux send-keys -t development:0.1 'cd /var/www/htdocs/' C-m
+    tmux new-window -n console -t development
+    tmux send-keys -t development:1 'cd /var/www/htdocs/' C-m
+    tmux select-window -t development:0
+fi
+tmux attach -t development
+What this gives me is a tmux session with 2 windows, window 1 has a Vim session in the top of the screen, with two terminals in the bottom 3rd or so of the screen, all pointed at my /var/www/htdocs/ directory. Window 2 is just a full screen console. Good thing about this is that it won't recreate the session if it's already there, it will just attach to it.

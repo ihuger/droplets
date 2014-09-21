@@ -1,0 +1,49 @@
+1. hardware/network io
+2. cpu 
+    - [context switch](http://technet.microsoft.com/en-us/library/cc938613.aspx):
+        A high rate of context switching means that the processor is being shared repeatedly—for example, by many threads of equal priority. It is a good practice to minimize the context switching rate by reducing the number of active threads on the system. The use of thread pooling, I/O completion ports, and asynchronous I/O can reduce the number of active threads. Consult your in-house developers or application vendors to determine if the applications you are running provide tuning features that include limiting the number of threads.
+        A context switching rate of 300 per second per processor is a moderate amount; a rate of 1000 per second or more is high. Values at this high level may be a problem.
+        You can determine whether context switching is excessive by comparing it with the value of Processor\% Privileged Time. If this counter is at 40 percent or more and the context-switching rate is high, then you can investigate the cause for high rates of context switches.
+3. memory
+4. fd
+5. connections:
+    - port: netstat -nat |grep  -i "port" |less (3\*177 to 50010)
+    - protocal:  ps -ef|grep "protocal" |wc -l 
+    - stat:     netstat -na|grep ESTABLISHED|wc -l ;    netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
+
+            CLOSED：无连接是活动的或正在进行
+            LISTEN：服务器在等待进入呼叫
+            SYN_RECV：一个连接请求已经到达，等待确认
+            SYN_SENT：应用已经开始，打开一个连接
+            ESTABLISHED：正常数据传输状态
+            FIN_WAIT1：应用说它已经完成
+            FIN_WAIT2：另一边已同意释放
+            ITMED_WAIT：等待所有分组死掉
+            CLOSING：两边同时尝试关闭
+            TIME_WAIT：另一边已初始化一个释放
+            LAST_ACK：等待所有分组死掉
+
+            netstat -n | awk ‘/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}’
+            TIME_WAIT 8947 等待足够的时间以确保远程TCP接收到连接中断请求的确认
+            FIN_WAIT1 15 等待远程TCP连接中断请求，或先前的连接中断请求的确认
+            FIN_WAIT2 1 从远程TCP等待连接中断请求
+            ESTABLISHED 55 代表一个打开的连接
+            SYN_RECV 21 再收到和发送一个连接请求后等待对方对连接请求的确认
+            CLOSING 2 没有任何连接状态
+            LAST_ACK 4 等待原来的发向远程TCP的连接中断请求的确认
+
+            TCP连接状态详解 
+            LISTEN： 侦听来自远方的TCP端口的连接请求
+            SYN-SENT： 再发送连接请求后等待匹配的连接请求
+            SYN-RECEIVED：再收到和发送一个连接请求后等待对方对连接请求的确认
+            ESTABLISHED： 代表一个打开的连接
+            FIN-WAIT-1： 等待远程TCP连接中断请求，或先前的连接中断请求的确认
+            FIN-WAIT-2： 从远程TCP等待连接中断请求
+            CLOSE-WAIT： 等待从本地用户发来的连接中断请求
+            CLOSING： 等待远程TCP对连接中断的确认
+            LAST-ACK： 等待原来的发向远程TCP的连接中断请求的确认
+            TIME-WAIT： 等待足够的时间以确保远程TCP接收到连接中断请求的确认
+            CLOSED： 没有任何连接状态
+
+    - threads:  ps axu|grep httpd|wc -l 
+
