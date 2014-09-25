@@ -1,0 +1,9 @@
+###hadoop client 添加snappy支持
+1. yum install snappy snappy-devel
+2. ln -sf /usr/lib64/libsnappy.so YOUR\_HADOOP\_LIBRARY(like :/usr/local/sandai/flume-server/hadoop/hadoop-1.0.4/lib/native/Linux-amd64-64)
+3. 链接之后报：java.lang.UnsatisfiedLinkError:  [refer](http://lucene.472066.n3.nabble.com/Setting-up-Snappy-compression-in-Hadoop-td4109029.html)
+    
+运行 nm libhadoop.so  | grep -i snappy，没有任何值出现，hadoop不支持snappy
+从http://archive.apache.org/dist/hadoop/core/hadoop-1.0.4/下载了源码，将其中的libhadoop.\*全部拷贝覆盖/usr/local/sandai/flume-server/hadoop/hadoop-1.0.4/lib/native/Linux-amd64-64
+
+

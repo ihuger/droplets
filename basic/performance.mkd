@@ -1,4 +1,17 @@
 1. hardware/network io
+    refer to [Measuring & Optimizing I/O Performance](https://www.igvita.com/2009/06/23/measuring-optimizing-io-performance/) or [iostat man page](http://linux.die.net/man/1/iostat)
+    - iostat -dx -t 1
+    - iostat -dxk /dev/sdh 5
+
+        # -k output rates in kB
+        # -x output extended stats
+        # -d monitoring single device
+        # sample stats every 5 seconds for device /dev/sdh
+    -  await
+        The average time (in milliseconds) for I/O requests issued to the device to be  served.  This includes the time spent by the requests in queue and the time spent servicing them.
+    - %util: 一秒中有百分之多少的时间用于 I/O 操作,或者说一秒中有多少时间 I/O 队列是非空的.即 delta(use)/s/1000 (因为use的单位为毫秒),如果 %util 接近 100%,说明产生的I/O请求太多,I/O系统已经满负荷,该磁盘可能存在瓶颈
+
+
 2. cpu 
     - [context switch](http://technet.microsoft.com/en-us/library/cc938613.aspx):
         A high rate of context switching means that the processor is being shared repeatedly—for example, by many threads of equal priority. It is a good practice to minimize the context switching rate by reducing the number of active threads on the system. The use of thread pooling, I/O completion ports, and asynchronous I/O can reduce the number of active threads. Consult your in-house developers or application vendors to determine if the applications you are running provide tuning features that include limiting the number of threads.

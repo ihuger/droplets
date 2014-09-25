@@ -1,0 +1,27 @@
+### commands 
+1. create
+2. show create table YOUR\_TABLE\_NAME
+3. drop table ..
+
+### sequncefile
+CREATE  TABLE dcdn\_gateway\_client\_info(
+  log\_time string,
+  dcdn\_id string,
+  peer\_id string,
+  product\_id int,
+  version string,
+  os\_platform string,
+  nat\_type int,
+  peer\_capacity int,
+  internal\_ip bigint)
+PARTITIONED BY (
+  data\_date string)
+ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '\t'
+STORED AS INPUTFORMAT
+  'org.apache.hadoop.mapred.SequenceFileInputFormat'
+OUTPUTFORMAT
+  'org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat'
+LOCATION
+  'hdfs://master.xldw.xunlei.com:9000/user/dcdn/warehouse/dcdn\_odl.db/dcdn\_gateway\_client\_info'
+

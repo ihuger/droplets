@@ -1,9 +1,3 @@
-### dynamic subtitude
-    
-    var1="some variable"
-    var2="var1"
-    echo "{!var2}"  #same as : echo $var1
-    
 #!/usr/bin/env sh
 #using $
 
@@ -44,7 +38,7 @@ echo "a24=$a24"
     #If parameter set, use it, else print err_msg and abort the script with an exit status of 1.
 p25=
 echo "${p25?p25 null}"
-: ${1?"need import at least one argument"}
+#: ${1?"need import at least one argument"}
 
 
 
