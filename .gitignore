@@ -6,6 +6,10 @@
 *.pb
 *.pyc
 *.swp
+*/.idea
+*/.iml
+java/algorithm/target
+java/algorithm/.idea
 *~
 */*/a.out
 */bin

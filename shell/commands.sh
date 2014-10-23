@@ -21,3 +21,6 @@ cat -sb $file
 
 ###find
 
+#dirname
+echo `dirname $0`
+
