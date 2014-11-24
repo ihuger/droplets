@@ -1,1 +1,12 @@
-[a relative link](array.mkd)
+##rules
+1. [array and map ](array.mkd)
+2. [date](date.sh)
+3. [function](functions.sh)
+4. [ioredirect](ioredirect.mkd)
+5. [parameter](parameter.mkd)
+
+
+##use case
+1. [array and map ](array.sh)
+2. [ioredirect](ioredirect.sh)
+3. [parameter](parameter.sh)

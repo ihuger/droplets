@@ -1,0 +1,6 @@
+1. [mongodb-vs-mysql](http://www.scriptrock.com/articles/mysql-vs-mongodb)
+    - One major limitation of MongoDB is that unlike the relational MySQL, it does not offer an easy way to join tables.
+2. [mongodb-vs-mysql-2](https://www.udemy.com/blog/mongodb-vs-mysql/)
+3. [flume-hive-elasticsearch](http://blog.mozilla.org/data/2010/12/30/flume-hive-and-realtime-indexing-via-elasticsearch-2/)
+4. [elasticsearch-vs-hive](http://db-engines.com/en/system/Elasticsearch%3BHive)
+5. [elasticsearch-docker](https://github.com/dockerfile/elasticsearch)

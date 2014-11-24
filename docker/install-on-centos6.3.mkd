@@ -1,0 +1,5 @@
+## sudo yum install dock-io  not working
+- [dock on centos-6](http://docs.docker.com/installation/centos/#installing-docker-centos-6)
+- [EPEL](https://fedoraproject.org/wiki/EPEL#How_can_I_use_these_extra_packages.3F) : yum install epel-release
+- [Cannot retrieve metalink for repository: epel]( https://community.hpcloud.com/article/centos-63-instance-giving-cannot-retrieve-metalink-repository-epel-error) : sed -i 's/(mirrorlist=http)s/\1/' /etc/yum.repos.d/epel.repo && yum -y update
+

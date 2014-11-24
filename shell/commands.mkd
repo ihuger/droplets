@@ -134,4 +134,11 @@ jpg=${filename##*.}   #(greedy) jile.jpg
 - splite .. prefix
     + split -l 1000 -a 3 test prefix
 
+###paste/diff/sdiff/merge
+echo -e '1\n2\n3' > t1
+echo -e '4\n5\n6' > t2
+paste t1 t2
+paste -d+ t1 t2 |bc 
+paste -sd+ t1 t2|bc
+
 
