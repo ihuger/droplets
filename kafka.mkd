@@ -1,0 +1,18 @@
+
+### kafka partition
+kafka的消息按主题进行归类，每个主题可以有多个partition，每个partition内部是有序的（按入队顺序），消费者根据offset来读取partition。每个partition可以设置多个备份，kafka集群上同一partition的多个备份有一个leader，用来处理读和写，其他的为followers，这样可以达到容错以及load balance 的目的(结合kafka消费的模型）(Each server acts as a leader for some of its partitions and a follower for others so load is well balanced within the cluster.)
+kafka会安装用户的定义，保留一定时期内所有的信息，不管是否已经消费
+
+### kafka producer
+producer决定每条消息要分到哪个主题的哪个partition，具体发送到哪个partition，完全有用户自己决定
+
+### kafka consumer
+- queue消息处理时，每个消费者从队列中取一个，结果是一个队列的数据分散到多个消费端
+- pub-sub消息处理时，发布者将通知所有订阅者，结果是每一个订阅者都有一份完整的拷贝
+- kafka处理时，通过消费组进行处理，每个消费者都有一个组号，相同组号的消费为同一个消费组（不管来自哪里的消费者），一条消息只会被同一个消费者处理一次（不考虑失败的情况下），实际情况中，同一个组内的不同消费者处理的是不同的分片(partition)，由于partition的分散特性，可以分散负担的同时，提高效率，而且由于一个消费者只会处理一个分片，所以可以保证得到的消息是有序的。（区别于队列模式下，如果有多个消费者，这多个消费者得到的数据只能是局部有序，相互直接是无法找出顺序关系，整个queue的顺序会被打乱），当然partition本身也是局部有序，但用户可以选择如何保留有序性。
+
+### guarantees
+- 消息的存储顺序为消息发送的顺序
+- 消费者将会安装存储的方式读取
+- 对N replication的主题，可以容忍N-1的机器故障
+

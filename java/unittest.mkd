@@ -1,0 +1,4 @@
+###easy mock
+http://easymock.org/user-guide.html
+http://www.ibm.com/developerworks/library/j-easymock/
+https://github.com/easymock/easymock

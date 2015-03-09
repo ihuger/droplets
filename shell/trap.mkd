@@ -1,0 +1,59 @@
+##refer page[Trap Statement](http://bash.cyberciti.biz/guide/Trap_statement)
+##refer page2[trap statement(detail)](http://www.ibm.com/developerworks/aix/library/au-usingtraps/)
+1. syntax :
+>
+trap arg signal
+trap command signal
+trap 'action' signal1 signal2 signalN
+trap 'action' SIGINT 
+trap 'action' SIGTERM SIGINT SIGFPE SIGSTP
+trap 'action' 15 2 8 20
+
+eg:
+```shell
+#!/usr/bin/env sh
+trap 'echo "Exit 0 signal detected..."' 0
+
+echo "main"
+
+exit 0
+```
+
+- The format of the trap command is:
+trap 'command_list'  signals
+Where command_list is a list of commands, which can include a function to run upon receiving a signal contained in the signals list. And, signals is a list of signals to catch or trap.
+- To ignore a signal, use two single quotes in place of the command_list:
+trap ''  signals
+- To reset a trap use:
+trap - signals
+Where signals is the signal list.
+
+
+2. signals:
+Getting a signal
+The two examples contained in Listing 1 and Listing 2 shows one way that checking post command execution can be carried out. However, what happens if a script gets terminated during its execution? Scripts can be killed or terminated using the signal mechanism (note that not all signals sent are terminal). A signal that is sent to a running process interrupts that process to force some sort of event, typically some action. Signals can come from, but not restricted to:
+The kernel or user space via some system event.
+The actual process itself via the keyboard (Ctrl-C).
+An illegal instruction from within the process.
+Another process via another user sending a kill to your process.
+Notification via a notification of the state of a required device.
+To view the current list of signals, use kill -l (the letter l) command. The list is presented in the form (signal number, signal name):
+ $ kill -l
+  1) SIGHUP       2) SIGINT       3) SIGQUIT      4) SIGILL
+   5) SIGTRAP      6) SIGABRT      7) SIGEMT       8) SIGFPE
+    9)SIGKILL     10) SIGBUS      11) SIGSEGV     12) SIGSYS
+    …....
+    …....
+    To view the signals and their default actions (on an AIX machine), view the file:
+    $ cat /usr/include/sys/signal.h|more
+    …..
+    …..
+#define SIGHUP     1    /* hangup, generated when terminal disconnects */
+#define SIGINT     2    /* interrupt, generated from terminal special char */
+#define SIGQUIT    3    /* (*) quit, generated from terminal special char */
+#define SIGILL     4    /* (*) illegal instruction (not reset when caught)*/
+#define SIGTRAP    5    /* (*) trace trap (not reset when caught) */
+#define SIGABRT    6    /* (*) abort process */
+    …..
+    …..
+
