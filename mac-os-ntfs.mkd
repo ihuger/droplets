@@ -1,0 +1,28 @@
+How to mount NTFS filesystem as read-writable in Mac OSX 10.8 Mountain Lion
+Mountain Lion has built in support for read-writable NTFS filesystem. But it is enabled as read only by Apple. This means that you can only read from an NTFS formated hard disk but cannot write data to it.
+
+To make it is as read-writable is very easy. There is no need to install any third party half working solutions or expensive softwares. Follow below steps :
+
+
+1. Open the terminal app
+
+2. Become 'root' by typing below command and give your current user's password
+
+ sudo -s
+
+3. Create a file called /etc/fstab (it won't be there so we need to create it). I'll use vi editor here.
+
+vi /etc/fstab
+
+4. Write below lines to it and save the file. Replace "My Passport" with your external hard disk's name. You can use 40 to represent space. So "My Passport" become "My40Passport"
+
+LABEL=My40Passport none ntfs rw,auto,nobrowse
+
+5. Now remove the external hard disk and reconnect it.
+
+6. If it is not showing in the Finder, just open a terminal and type below command to open it.
+
+open /Volumes/My\ Passport/
+
+7. Now try copying some files from your Mac to this external hard disk and it should be working now.
+
